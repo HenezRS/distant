@@ -57,7 +57,7 @@ class Distant {
         shape.end();
 
         batch.begin();
-        debugDrawer.draw(batch, framerate);
+        debugDrawer.draw(batch, framerate, world);
         batch.end();
     }
 

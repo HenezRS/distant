@@ -9,6 +9,7 @@ import com.henez.distant.misc.Framerate;
 import com.henez.distant.renderer.Batcher;
 import com.henez.distant.renderer.Shaper;
 import com.henez.distant.text.Text;
+import com.henez.distant.world.World;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,7 +20,7 @@ public class DebugDrawer {
         lines = new GameList<>();
     }
 
-    public void draw(Batcher batch, Framerate framerate) {
+    public void draw(Batcher batch, Framerate framerate, World world) {
         lines.clear();
         lines.add(In.showHeld());
         lines.add(String.format("FPS: %s - Time: %s", framerate.getFrameRate(), framerate.getSecondsSinceGameStart()));
@@ -31,11 +32,11 @@ public class DebugDrawer {
                                 In.mouse.getGy(),
                                 In.mouse.getX(),
                                 In.mouse.getY()));
-        /*lines.add(String.format("player: %s,%s [%s,%s]",
-                                (int) Static.world.getPlayer().getX(),
-                                (int) Static.world.getPlayer().getY(),
-                                Static.world.getPlayer().getGx(),
-                                Static.world.getPlayer().getGy()));*/
+        lines.add(String.format("player: %s,%s [%s,%s]",
+                                world.getPlayer().getX(),
+                                world.getPlayer().getY(),
+                                world.getPlayer().getGX(),
+                                world.getPlayer().getGY()));
 
         int height = lines.size() * Text.TEXT_LINE_H;
         AtomicInteger atomicInteger = new AtomicInteger(0);

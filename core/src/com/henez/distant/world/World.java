@@ -10,7 +10,9 @@ import com.henez.distant.world.actors.player.Player;
 import com.henez.distant.world.animation.Sprite;
 import com.henez.distant.world.animation.SpriteAnimation;
 import com.henez.distant.world.map.Map;
+import lombok.Getter;
 
+@Getter
 public class World {
     Map map;
     Actor player;
