@@ -13,12 +13,13 @@ public class Player extends Actor {
         super(x, y, sprite);
     }
 
-    @Override public void update(Map map) {
-        super.update();
+    @Override
+    public void update(Map map) {
+        super.update(map);
 
         if (!movement.isMoving()) {
             pollInputMovement().ifPresent(facing -> {
-                if (canMove(facing, map)) {
+                if (true/*canMove(facing, map)*/) {
                     beginMove(facing);
                 }
             });

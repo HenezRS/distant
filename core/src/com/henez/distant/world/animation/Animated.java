@@ -16,7 +16,7 @@ public abstract class Animated extends Positioned {
     }
 
     public void giveAnimation(Animation animation, SpriteAnimation spriteAnimation) {
-        sprite.getAnimations().put(animation.name, spriteAnimation);
+        sprite.getAnimations().put(animation, spriteAnimation);
     }
 
     public void setAnimation(Animation animation) {

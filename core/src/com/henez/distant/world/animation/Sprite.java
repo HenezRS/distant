@@ -14,35 +14,39 @@ import java.util.HashMap;
 @Getter
 @Setter
 public class Sprite {
-    private HashMap<String, SpriteAnimation> animations;
+    private HashMap<Animation, SpriteAnimation> animations;
     private Animation animation;
 
     public Sprite(TextureRegion tex) {
         animation = Animation.none;
         animations = new HashMap<>();
-        animations.put(animation.name, new SpriteAnimation(Global.SEC, tex));
+        animations.put(animation, new SpriteAnimation(Global.SEC, tex));
     }
 
     public void update() {
-        animations.get(animation.name).update();
+        current().update();
     }
 
     public void draw(Rect pos, Batcher batch) {
-        batch.draw(animations.get(animation.name).getCurrent(), pos);
+        batch.draw(current().getCurrent(), pos);
     }
 
     public void draw(Rect pos, Batcher batch, Facing facing2) {
-        batch.draw(animations.get(animation.name).getCurrent(), pos, facing2);
+        batch.draw(current().getCurrent(), pos, facing2);
     }
 
     public void setAnimationReset(Animation animation) {
         setAnimation(animation);
-        animations.get(animation.name).reset();
+        animations.get(animation).reset();
     }
 
     public void setAnimationContinued(Animation newAnimation) {
-        SpriteAnimation lastAnimation = animations.get(animation.name);
+        SpriteAnimation lastAnimation = current();
         setAnimation(newAnimation);
-        animations.get(animation.name).sync(lastAnimation);
+        current().sync(lastAnimation);
+    }
+
+    private SpriteAnimation current() {
+        return animations.get(animation);
     }
 }
