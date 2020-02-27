@@ -1,7 +1,7 @@
 package com.henez.distant.world.actors;
 
-import com.henez.distant.enums.Animation;
 import com.henez.distant.enums.Facing;
+import com.henez.distant.enums.animation.Animation;
 import com.henez.distant.global.Global;
 import com.henez.distant.renderer.Batcher;
 import com.henez.distant.world.actions.Movement;
@@ -40,13 +40,12 @@ public class Actor extends Animated {
 
     public void beginMove(Facing facing) {
         sprite.setAnimationContinued(Animation.move);
+        sprite.setFacing(facing);
         movement.begin(facing);
         this.facing = facing;
     }
 
-    public void draw(Batcher batch) {
-        //int drawX = Numbers.round(pos.x);
-        //int drawY = Numbers.round(pos.y);
-        sprite.draw(pos, batch, facing);
+    @Override public void draw(Batcher batch) {
+        super.draw(batch);
     }
 }

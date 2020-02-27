@@ -11,6 +11,8 @@ public enum Facing {
     public final int tx;
     public final int ty;
 
+    public static final int COUNT = 4;
+
     Facing(int dir, int tx, int ty) {
         this.dir = dir;
         this.tx = tx;

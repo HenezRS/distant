@@ -1,4 +1,4 @@
-package com.henez.distant.enums;
+package com.henez.distant.enums.animation;
 
 public enum Animation {
     none("NONE"),

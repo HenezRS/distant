@@ -1,14 +1,12 @@
 package com.henez.distant.world;
 
-import com.henez.distant.atlas.Atlas;
-import com.henez.distant.atlas.ImgActors;
-import com.henez.distant.enums.Animation;
+import com.henez.distant.enums.animation.Animation;
+import com.henez.distant.enums.animation.AnimationComplete;
 import com.henez.distant.global.Global;
 import com.henez.distant.renderer.Batcher;
 import com.henez.distant.world.actors.Actor;
 import com.henez.distant.world.actors.player.Player;
 import com.henez.distant.world.animation.Sprite;
-import com.henez.distant.world.animation.SpriteAnimation;
 import com.henez.distant.world.map.Map;
 import lombok.Getter;
 
@@ -16,20 +14,27 @@ import lombok.Getter;
 public class World {
     Map map;
     Actor player;
+    Actor enemy;
 
     public World() {
         map = new Map(0, 0, 18, 18);
-        player = new Player(9, 9, new Sprite(Atlas.get(ImgActors.PLAYER_0)));
-        player.giveAnimation(Animation.idle, new SpriteAnimation(Global.SEC2, Atlas.get(ImgActors.PLAYER_0), Atlas.get(ImgActors.PLAYER_1)));
-        player.giveAnimation(Animation.move, new SpriteAnimation(Global.SEC2, 3.0f, Atlas.get(ImgActors.PLAYER_0), Atlas.get(ImgActors.PLAYER_1)));
+        player = new Player(9, 9, new Sprite());
+        player.addAnimation(Animation.idle, Global.SEC2, 1.0f, AnimationComplete.PLAYER);
+        player.addAnimation(Animation.move, Global.SEC2, 3.0f, AnimationComplete.PLAYER);
         player.setAnimation(Animation.idle);
+
+        enemy = new Actor(11, 9, new Sprite());
+        enemy.addAnimation(Animation.idle, Global.SEC2, 1.0f, AnimationComplete.ENEMY);
+        enemy.setAnimation(Animation.idle);
     }
 
     public void update() {
         player.update(map);
+        enemy.update(map);
     }
 
     public void draw(Batcher batch) {
         player.draw(batch);
+        enemy.draw(batch);
     }
 }

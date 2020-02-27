@@ -1,26 +1,33 @@
 package com.henez.distant.world.animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.henez.distant.datastructures.GameList;
 import com.henez.distant.datastructures.Rect;
-import com.henez.distant.enums.Animation;
 import com.henez.distant.enums.Facing;
-import com.henez.distant.global.Global;
+import com.henez.distant.enums.animation.Animation;
+import com.henez.distant.enums.animation.AnimationComplete;
+import com.henez.distant.enums.animation.AnimationSet;
 import com.henez.distant.renderer.Batcher;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 @Getter
 @Setter
 public class Sprite {
-    private HashMap<Animation, SpriteAnimation> animations;
+    private GameList<HashMap<Animation, SpriteAnimation>> animations;
     private Animation animation;
+    private Facing facing;
+    private boolean downOnly;
 
-    public Sprite(TextureRegion tex) {
-        animation = Animation.none;
-        animations = new HashMap<>();
-        animations.put(animation, new SpriteAnimation(Global.SEC, tex));
+    public Sprite() {
+        super();
+        animations = new GameList<>();
+        Arrays.stream(Facing.values()).forEach(a -> animations.add(new HashMap<>()));
+        facing = Facing.DOWN;
+        downOnly = false;
     }
 
     public void update() {
@@ -28,16 +35,39 @@ public class Sprite {
     }
 
     public void draw(Rect pos, Batcher batch) {
-        batch.draw(current().getCurrent(), pos);
+        batch.draw(current().getCurrent(), pos.getIntX(), pos.getIntY());
     }
 
-    public void draw(Rect pos, Batcher batch, Facing facing2) {
-        batch.draw(current().getCurrent(), pos, facing2);
+    public void setFacing(Facing facing) {
+        this.facing = downOnly ? Facing.DOWN : facing;
+    }
+
+    public void addAnimation(Animation animation, float delay, float speed, AnimationComplete animationComplete) {
+        if (animationComplete.downOnly) {
+            buildSpriteAnimationsDownOnly(animation, delay, speed, animationComplete);
+        } else {
+            buildSpriteAnimations(animation, delay, speed, animationComplete);
+        }
+    }
+
+    private void buildSpriteAnimationsDownOnly(Animation animation, float delay, float speed, AnimationComplete animationComplete) {
+        downOnly = true;
+        int dir = Facing.DOWN.dir;
+        AnimationSet animationSet = animationComplete.animationSets.first();
+        animations.get(dir).put(animation, new SpriteAnimation(delay, speed, animationSet.texs.toArray(new TextureRegion[0])));
+
+    }
+
+    private void buildSpriteAnimations(Animation animation, float delay, float speed, AnimationComplete animationComplete) {
+        for (int i = 0; i < Facing.COUNT; ++i) {
+            AnimationSet animationSet = animationComplete.animationSets.get(i);
+            animations.get(i).put(animation, new SpriteAnimation(delay, speed, animationSet.texs.toArray(new TextureRegion[0])));
+        }
     }
 
     public void setAnimationReset(Animation animation) {
         setAnimation(animation);
-        animations.get(animation).reset();
+        current().reset();
     }
 
     public void setAnimationContinued(Animation newAnimation) {
@@ -47,6 +77,6 @@ public class Sprite {
     }
 
     private SpriteAnimation current() {
-        return animations.get(animation);
+        return animations.get(facing.dir).get(animation);
     }
 }
