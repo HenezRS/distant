@@ -19,7 +19,7 @@ public class Player extends Actor {
 
         if (!movement.isMoving()) {
             pollInputMovement().ifPresent(facing -> {
-                if (true/*canMove(facing, map)*/) {
+                if (canMove(facing, map)) {
                     beginMove(facing);
                 }
             });

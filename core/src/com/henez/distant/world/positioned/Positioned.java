@@ -2,8 +2,10 @@ package com.henez.distant.world.positioned;
 
 import com.henez.distant.datastructures.Rect;
 import com.henez.distant.global.Global;
+import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 @Setter
 public abstract class Positioned {
     protected Rect pos;
@@ -14,7 +16,7 @@ public abstract class Positioned {
     }
 
     public Positioned(int x, int y, int w, int h) {
-        set(x, y);
+        set(x, y, w, h);
     }
 
     public Positioned(Rect pos) {
@@ -68,6 +70,14 @@ public abstract class Positioned {
 
     public int getGY() {
         return gpos.getIntY();
+    }
+
+    public int getGW() {
+        return gpos.w;
+    }
+
+    public int getGH() {
+        return gpos.h;
     }
 
     public void setGX(int x) {

@@ -2,6 +2,7 @@ package com.henez.distant.renderer;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.henez.distant.datastructures.Rect;
 import com.henez.distant.global.Global;
 
 public class Renderer {
@@ -58,9 +59,9 @@ public class Renderer {
         update();
     }
 
-    /*public void positionCameraOnActor(Actor actor) {
-        positionCamera(actor.getX() + Global.tilePixel2 - Global.cameraPixelWW, actor.getY() + Global.tilePixel2 - Global.cameraPixelHH);
-    }*/
+    public void positionCameraOn(Rect pos) {
+        positionCamera(pos.getIntX() + Global.tilePixel2 - Global.cameraPixelWW, pos.getIntY() + Global.tilePixel2 - Global.cameraPixelHH);
+    }
 
     public void moveCamera(float x, float y) {
         camera.position.x += x;
