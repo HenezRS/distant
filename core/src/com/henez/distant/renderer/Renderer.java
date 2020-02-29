@@ -88,6 +88,14 @@ public class Renderer {
         return (int) camera.position.y - Global.cameraPixelHH;
     }
 
+    public int getW() {
+        return Global.cameraPixelW;
+    }
+
+    public int getH() {
+        return Global.cameraPixelH;
+    }
+
     public int getXX() {
         return (int) camera.position.x + Global.cameraPixelWW;
     }

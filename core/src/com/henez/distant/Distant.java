@@ -53,7 +53,7 @@ class Distant {
 
         shape.begin(ShapeRenderer.ShapeType.Filled);
         Gdx.gl.glEnable(GL20.GL_BLEND);
-
+        debugDrawer.draw(shape);
         shape.end();
 
         batch.begin();

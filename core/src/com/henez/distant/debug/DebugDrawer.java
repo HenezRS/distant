@@ -3,6 +3,7 @@ package com.henez.distant.debug;
 import com.henez.distant.datastructures.GameList;
 import com.henez.distant.datastructures.Rect;
 import com.henez.distant.enums.Colors;
+import com.henez.distant.global.Global;
 import com.henez.distant.global.Static;
 import com.henez.distant.input.In;
 import com.henez.distant.misc.Framerate;
@@ -15,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DebugDrawer {
     private GameList<String> lines;
+    private int height;
 
     public DebugDrawer() {
         lines = new GameList<>();
@@ -23,6 +25,7 @@ public class DebugDrawer {
     public void draw(Batcher batch, Framerate framerate, World world) {
         lines.clear();
         lines.add(In.showHeld());
+        lines.add(String.format("State: %s - Moves Till Battle: %s", Static.gs.getName(), world.getPlayer().getStepsUntilBattle()));
         lines.add(String.format("FPS: %s - Time: %s", framerate.getFrameRate(), framerate.getSecondsSinceGameStart()));
         lines.add(String.format("camera: %s,%s", Static.renderer.getX(), Static.renderer.getY()));
         lines.add(String.format("mouse: %s,%s [%s,%s] {%s,%s}",
@@ -38,7 +41,7 @@ public class DebugDrawer {
                                 world.getPlayer().getGX(),
                                 world.getPlayer().getGY()));
 
-        int height = lines.size() * Text.TEXT_LINE_H;
+        height = lines.size() * Text.TEXT_LINE_H;
         AtomicInteger atomicInteger = new AtomicInteger(0);
         lines.forEach(line -> {
             atomicInteger.getAndIncrement();
@@ -48,5 +51,6 @@ public class DebugDrawer {
 
     public void draw(Shaper shape) {
         shape.rect(new Rect(In.mouse.getGx() * 16, In.mouse.getGy() * 16), Colors.text_default.mul(0.75f, 0.35f));
+        shape.rect(new Rect(Static.renderer.getX(), Static.renderer.getYY() - (height + Text.TEXT_H), Global.cameraPixelW, (height + Text.TEXT_H)), Colors.black_50.color);
     }
 }
