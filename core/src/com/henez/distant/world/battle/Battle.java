@@ -6,13 +6,14 @@ import com.henez.distant.misc.GameState;
 import com.henez.distant.misc.timer.Timer;
 import com.henez.distant.renderer.Batcher;
 import com.henez.distant.world.actors.Actor;
+import com.henez.distant.world.actors.fighter.Fighter;
 
 public class Battle {
     private Actor player;
     private Actor enemy;
     private Timer timer;
 
-    public Battle(Actor player, Actor enemy) {
+    public Battle(Fighter player, Fighter enemy) {
         this.player = player;
         this.enemy = enemy;
         timer = new Timer(Global.SEC * 3);

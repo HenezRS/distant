@@ -38,4 +38,8 @@ public class Numbers {
     public static int round(float value) {
         return Math.round(value);
     }
+
+    public static int percent(int value, float mul) {
+        return (int) (((float) value) * mul);
+    }
 }

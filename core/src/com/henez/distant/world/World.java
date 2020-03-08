@@ -6,8 +6,8 @@ import com.henez.distant.global.Global;
 import com.henez.distant.global.Static;
 import com.henez.distant.misc.GameState;
 import com.henez.distant.renderer.Batcher;
-import com.henez.distant.world.actors.Actor;
-import com.henez.distant.world.actors.player.Player;
+import com.henez.distant.world.actors.fighter.Fighter;
+import com.henez.distant.world.actors.fighter.player.Player;
 import com.henez.distant.world.animation.Sprite;
 import com.henez.distant.world.battle.Battle;
 import com.henez.distant.world.map.Map;
@@ -18,7 +18,7 @@ import lombok.Getter;
 public class World {
     Map map;
     Player player;
-    Actor enemy;
+    Fighter enemy;
     Battle battle;
 
     public World() {
@@ -60,8 +60,8 @@ public class World {
         player.draw(batch);
     }
 
-    private Actor createEnemy(Player player) {
-        enemy = new Actor(player.getGX() + player.getFacing().tx, player.getGY() + player.getFacing().ty, new Sprite());
+    private Fighter createEnemy(Player player) {
+        enemy = new Fighter(player.getGX() + player.getFacing().tx, player.getGY() + player.getFacing().ty, new Sprite());
         enemy.addAnimation(Animation.idle, Global.SEC2, 1.0f, AnimationComplete.ENEMY);
         enemy.setAnimation(Animation.idle);
         return enemy;

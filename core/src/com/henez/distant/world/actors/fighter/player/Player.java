@@ -1,9 +1,9 @@
-package com.henez.distant.world.actors.player;
+package com.henez.distant.world.actors.fighter.player;
 
 import com.henez.distant.datastructures.Numbers;
 import com.henez.distant.enums.Facing;
 import com.henez.distant.input.In;
-import com.henez.distant.world.actors.Actor;
+import com.henez.distant.world.actors.fighter.Fighter;
 import com.henez.distant.world.animation.Sprite;
 import com.henez.distant.world.map.Map;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Getter;
 import java.util.Optional;
 
 @Getter
-public class Player extends Actor {
+public class Player extends Fighter {
 
     private int stepsUntilBattle;
     private boolean triggerBattle;
